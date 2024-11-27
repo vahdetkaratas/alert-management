@@ -30,3 +30,4 @@ export const updateAlert = async (id: number, data: { name: string; age: number 
 export const deleteAlert = async (id: number) => {
   await API.delete(`/alerts/${id}`);
 };
+

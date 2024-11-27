@@ -12,7 +12,7 @@ const App: React.FC = () => {
         <Route path="/" element={<AlertsList />} />
         <Route path="/create" element={<CreateAlert />} />
         <Route path="/alerts/:id" element={<AlertDetails />} />
-        <Route path="/alerts/:id/edit" element={<EditAlert />} /> {/* New route */}
+        <Route path="/alerts/:id/edit" element={<EditAlert />} /> 
       </Routes>
     </Router>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAlerts } from '../api/alerts';
+import { getAlerts, deleteAlert } from '../api/alerts';
 import { Link } from 'react-router-dom';
 
 interface Alert {
@@ -28,6 +28,16 @@ const AlertsList: React.FC = () => {
 
     fetchAlerts();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteAlert(id);
+      setAlerts((prevAlerts) => prevAlerts.filter((alert) => alert.id !== id));
+    } catch (err) {
+      console.error('Failed to delete alert:', err);
+      setError('Failed to delete alert. Please try again.');
+    }
+  };
 
   if (loading) return <div>Loading alerts...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
@@ -101,6 +111,21 @@ const AlertsList: React.FC = () => {
             >
               Edit Alert
             </Link>
+            <br />
+            <button
+              onClick={() => handleDelete(alert.id)}
+              style={{
+                marginTop: '8px',
+                color: 'white',
+                backgroundColor: 'red',
+                padding: '6px 12px',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+            >
+              Delete Alert
+            </button>
           </li>
         ))}
       </ul>
