@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createAlert } from '../api/alerts';
+import { motion } from 'framer-motion';
 
 const CreateAlert: React.FC = () => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate(); // React Router hook for navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !age || !file) {
-      setError('All fields are required!');
+    if (!name.trim() || !age || !file) {
+      setError('All fields are required.');
       return;
     }
 
@@ -24,44 +25,80 @@ const CreateAlert: React.FC = () => {
 
     try {
       await createAlert(formData);
-      setError(null);
-      navigate('/'); // Redirect to Alerts List page after success
-    } catch (err) {
+      navigate('/');
+    } catch {
       setError('Failed to create alert. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h1>Create Alert</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Age:</label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>File:</label>
-          <input
-            type="file"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-          />
-        </div>
-        <button type="submit">Create Alert</button>
-      </form>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#e0f7fa',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '500px',
+          padding: '16px',
+          background: '#fff',
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        }}
+      >
+        <h1 style={{ textAlign: 'center', marginBottom: '16px' }}>Create Alert</h1>
+        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '12px' }}>
+            <label>Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{ marginTop: '8px', width: '100%' }}
+            />
+          </div>
+          <div style={{ marginBottom: '12px' }}>
+            <label>Age:</label>
+            <input
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              style={{ marginTop: '8px', width: '100%' }}
+            />
+          </div>
+          <div style={{ marginBottom: '12px' }}>
+            <label>File:</label>
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              style={{ marginTop: '8px', width: '100%' }}
+            />
+          </div>
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '12px',
+              backgroundColor: '#007BFF',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Create Alert
+          </button>
+        </form>
+      </div>
+    </motion.div>
   );
 };
 
