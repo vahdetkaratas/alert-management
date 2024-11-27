@@ -33,9 +33,21 @@ const AlertsList: React.FC = () => {
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
 
   return (
-    <div>
-      <h1>Alerts List</h1>
-      <Link to="/create" style={{ textDecoration: 'none', color: 'blue' }}>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '16px' }}>
+      <h1 style={{ textAlign: 'center' }}>Alerts List</h1>
+      <Link
+        to="/create"
+        style={{
+          display: 'block',
+          margin: '16px 0',
+          textDecoration: 'none',
+          color: 'white',
+          backgroundColor: '#007BFF',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          textAlign: 'center',
+        }}
+      >
         + Create New Alert
       </Link>
       <ul style={{ listStyleType: 'none', padding: 0 }}>
@@ -47,9 +59,10 @@ const AlertsList: React.FC = () => {
               borderRadius: '8px',
               padding: '16px',
               marginBottom: '12px',
+              backgroundColor: '#f9f9f9',
             }}
           >
-            <h2>{alert.name}</h2>
+            <h2 style={{ margin: 0 }}>{alert.name}</h2>
             <p>Age: {alert.age}</p>
             <a
               href={`http://localhost:3001/${alert.fileUrl}`}
