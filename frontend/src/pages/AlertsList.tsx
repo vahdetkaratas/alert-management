@@ -89,6 +89,18 @@ const AlertsList: React.FC = () => {
             >
               View Details
             </Link>
+            <br />
+            <Link
+              to={`/alerts/${alert.id}/edit`}
+              style={{
+                display: 'inline-block',
+                marginTop: '8px',
+                color: 'orange',
+                textDecoration: 'none',
+              }}
+            >
+              Edit Alert
+            </Link>
           </li>
         ))}
       </ul>

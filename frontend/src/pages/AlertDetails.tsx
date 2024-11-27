@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getAlertById } from '../api/alerts';
 
 interface Alert {
@@ -10,7 +10,7 @@ interface Alert {
 }
 
 const AlertDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Get the alert ID from the URL
+  const { id } = useParams<{ id: string }>();
   const [alert, setAlert] = useState<Alert | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,8 +39,12 @@ const AlertDetails: React.FC = () => {
       <h1>Alert Details</h1>
       {alert ? (
         <div>
-          <p><strong>Name:</strong> {alert.name}</p>
-          <p><strong>Age:</strong> {alert.age}</p>
+          <p>
+            <strong>Name:</strong> {alert.name}
+          </p>
+          <p>
+            <strong>Age:</strong> {alert.age}
+          </p>
           <a
             href={`http://localhost:3001/${alert.fileUrl}`}
             target="_blank"
@@ -48,6 +52,18 @@ const AlertDetails: React.FC = () => {
           >
             View Attached File
           </a>
+          <br />
+          <Link
+            to={`/alerts/${alert.id}/edit`}
+            style={{
+              display: 'inline-block',
+              marginTop: '8px',
+              color: 'orange',
+              textDecoration: 'none',
+            }}
+          >
+            Edit Alert
+          </Link>
         </div>
       ) : (
         <p>No alert found.</p>
